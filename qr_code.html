@@ -35,15 +35,15 @@
 
         <div class="card">
             <div class="qr-box">
-                <div class="qr"><img src="Sample QR image.png" alt="" ></div>
+                <div class="qr"><img src="Sample QR image.png" alt=""></div>
                 <span>SCAN TO DOWNLOAD</span>
             </div>
 
             <p class="code-label">Or enter this 16-character code:</p>
 
             <div class="code-row">
-                <div class="code">A1B2-C3D4-E5F6-G7H8</div>
-                <button>Copy</button>
+                <div id="code">A1B2-C3D4-E5F6-G7H8</div>
+                <button id="copybtn">Copy</button>
             </div>
         </div>
 
@@ -53,3 +53,20 @@
 </body>
 
 </html>
+
+<script>
+    const copybtn = document.getElementById("copybtn");
+    const code = document.getElementById("code");
+
+    copybtn.addEventListener("click", () => {
+        const originalText = code.textContent;
+        navigator.clipboard.writeText(originalText);
+
+        code.textContent = "Copied!";
+
+        setTimeout(() => {
+            code.textContent = originalText;
+        }, 1500);
+    });
+
+</script>

@@ -170,7 +170,7 @@ p {
     margin-top: 10px;
 }
 
-.code {
+#code {
     flex: 1;
     padding: 12px;
     border: 1px solid #e5e7eb;
@@ -178,7 +178,7 @@ p {
     font-weight: 600;
 }
 
-button {
+#copybtn {
     background: #2563eb;
     color: white;
     border: none;

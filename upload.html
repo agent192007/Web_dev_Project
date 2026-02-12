@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="upload.css">
+    <title>FileShare</title>
 </head>
 
 <body>
@@ -33,25 +34,84 @@
         <p class="subtitle">Fast, secure, and encrypted file sharing for your team.</p>
 
         <div class="card">
-            <div class="drop-zone">
-                <div class="upload-icon"><img src="drop-box.svg" alt=""></div>
-                <h3>Drag & drop files here</h3>
-                <p>Or <a href="#">browse files</a> from your computer</p>
 
-                <div class="badges">
-                    <div class="badge">PDF, JPG, PNG, ZIP</div>
-                    <div class="badge">Max 100MB</div>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="fileInput" hidden multiple>
+                <div class="drop-text" id="droptext">
+                    <div class="upload-icon"><img src="drop-box.svg" alt=""></div>
+                    <h3>Drag & drop files here</h3>
+                    <span>or <span class="browse">browse files</span></span>
+
+                    <div class="badges">
+                        <div class="badge">PDF, JPG, PNG, ZIP</div>
+                        <div class="badge">Max 100MB</div>
+                    </div>
                 </div>
+
+                <div class="file-list" id="fileList"></div>
+                <button class="add-file-btn" id="addFileBtn">Add File</button>
             </div>
 
             <button class="upload-btn"><a href="qr_code.html">Upload Files</a></button>
             <div class="footer-note">24BCE5138</div>
         </div>
     </div>
+    this
 
 </body>
 
 </html>
 
-</html>
+<script>
+    const dropZone = document.getElementById("dropZone");
+    const fileInput = document.getElementById("fileInput");
+    const browse = document.querySelector(".browse");
+    const fileList = document.getElementById("fileList");
+    const dropContent = document.getElementById("droptext");
+    const addFileBtn = document.getElementById("addFileBtn");
 
+    let selectedFiles = [];
+
+    browse.addEventListener("click", () => fileInput.click());
+    dropZone.addEventListener("click", (e) => {
+        if (e.target === dropZone) fileInput.click();
+    });
+    addFileBtn.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", (e) => {
+        handleFiles(e.target.files);
+    });
+
+    dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        handleFiles(e.dataTransfer.files);
+    });
+
+    function handleFiles(files) {
+        dropContent.style.display = "none";
+        addFileBtn.style.display = "block";
+
+        for (let file of files) {
+            selectedFiles.push(file);
+        }
+
+        renderFiles();
+    }
+
+    function renderFiles() {
+        fileList.innerHTML = "";
+
+        selectedFiles.forEach((file, index) => {
+            const div = document.createElement("div");
+            div.className = "file-item";
+
+            div.innerHTML = `<span>${file.name}</span>`;
+
+            fileList.appendChild(div);
+        });
+    }
+</script>
